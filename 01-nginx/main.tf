@@ -123,12 +123,10 @@ resource "aws_instance" "web" {
     network_interface_id = aws_network_interface.temp01-ec2-1-NI.id
     device_index         = 0
   }
-  user_data = <<-EOF
-              #!bin/bash
-              sudo apt update -y
-              sudo apt install nginx -y
-              sudo systemctl start nginx
-              EOF
+  user_data = file("./user_data.sh")
+  tags = {
+    "name" = "temp01-ec2-1"
+  }
 }
 
 # output public IP
